@@ -187,7 +187,7 @@ def test_epoch(test_loader, model, optimizer, epoch, hist_folder_name):
                           
             cv2.imwrite(file_name_save, inp_img)                                                                                            
 
-        no_img_to_write = 20
+        no_img_to_write = 40
         inf_folder_name = 'inference_folder'
 
         if(step < no_img_to_write):
@@ -241,12 +241,25 @@ def test(test_loader, model, optimizer, n_epoch, resume, model_name, hist_folder
     with torch.no_grad():
         test_epoch(test_loader, model, optimizer, epoch, hist_folder_name)
 
+    accuracy = accuracy_score(y_actual, y_pred)
+    recall = recall_score(y_actual, y_pred, average='micro')
+    precision = precision_score(y_actual, y_pred, average = 'micro')
+
+    print('Accuracy of Test is', accuracy)
+    print('Recall of test is', recall)
+    print('Precision of test is', precision)
+
+
     print('Plotting the confusion matrix')
     #Plot the confusion matrix
     plot_confusion_matrix(y_actual, y_pred, metrics_folder)
+    print('Plotting Confusion Matrix done')
+
 
     print('Plotting UMAP')
     extract_features_and_plot_umap(test_loader, model, umap_layer, metrics_folder)
+    print('Plotting UMAP completed')
+
 
 
 def plot_confusion_matrix(y_actual, y_pred, metrics_folder):
