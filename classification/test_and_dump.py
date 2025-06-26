@@ -311,7 +311,7 @@ def extract_features_and_plot_umap(test_loader, model, layer_name, metrics_folde
     features = np.vstack(features)
     labels = np.array(labels)
     
-    reducer = umap.UMAP(n_neighbors=15, min_dist=0.1, random_state=42)
+    reducer = umap.UMAP(n_neighbors=2, min_dist=0.1, n_components=40, metric='euclidean',random_state=42)
     embedding = reducer.fit_transform(features)
     
     # Plot
